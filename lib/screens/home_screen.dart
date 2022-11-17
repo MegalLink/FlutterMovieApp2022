@@ -15,6 +15,11 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {}, icon: const Icon(Icons.search_outlined))
           ],
         ),
-        body: Column(children: const [CardSwiper()]));
+        body: SingleChildScrollView(
+          child: Column(children: const [
+            CardSwiper(),
+            MovieSlider(),
+          ]),
+        ));
   }
 }
