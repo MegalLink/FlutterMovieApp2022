@@ -34,9 +34,9 @@ class _MoviePoster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 130,
-      height: 180,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      margin: EdgeInsets.symmetric(horizontal: 5),
+      width: 110,
+      height: 200,
       child: Column(children: [
         GestureDetector(
           onTap: () => Navigator.pushNamed(context, 'details',
