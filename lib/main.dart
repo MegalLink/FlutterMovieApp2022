@@ -4,9 +4,11 @@ import 'package:provider/provider.dart';
 
 import 'screens/screens.dart';
 
-void main() => runApp(AppState());
+void main() => runApp(const AppState());
 
 class AppState extends StatelessWidget {
+  const AppState({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

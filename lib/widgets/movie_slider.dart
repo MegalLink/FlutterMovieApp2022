@@ -2,11 +2,29 @@
 
 import 'package:flutter/material.dart';
 
+import '../models/models.dart';
+
 class MovieSlider extends StatelessWidget {
-  const MovieSlider({super.key});
+  final List<Movie> movies;
+
+  const MovieSlider({required this.movies, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    if (movies.isEmpty) {
+      return SizedBox(
+          width: double.infinity,
+          height: size.height * 0.5,
+          child: const Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(),
+            ),
+          ));
+    }
+
     return SizedBox(
       width: double.infinity,
       height: 250,
@@ -22,8 +40,9 @@ class MovieSlider extends StatelessWidget {
           // toma todo el tamaño disponible
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
-              itemBuilder: (_, int index) => _MoviePoster()),
+              itemCount: movies.length,
+              itemBuilder: (_, int index) =>
+                  _MoviePoster(movie: movies[index])),
         )
       ]),
     );
@@ -31,6 +50,9 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
+  final Movie movie;
+  const _MoviePoster({required this.movie, Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +70,7 @@ class _MoviePoster extends StatelessWidget {
                 height: 160,
                 fit: BoxFit.cover,
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage('https://via.placeholder.com/300x400')),
+                image: NetworkImage(movie.getFullPosterImage())),
           ),
         ),
         SizedBox(

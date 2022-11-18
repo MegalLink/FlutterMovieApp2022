@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter_movie_app/widgets/movie_slider.dart';
-
 import '../models/movie.dart';
 
 class CardSwiper extends StatelessWidget {
@@ -11,6 +9,19 @@ class CardSwiper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    if (movies.isEmpty) {
+      return SizedBox(
+          width: double.infinity,
+          height: size.height * 0.5,
+          child: const Center(
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: CircularProgressIndicator(),
+            ),
+          ));
+    }
 
     return Container(
         margin: const EdgeInsets.only(top: 20.0),
