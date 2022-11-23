@@ -9,6 +9,7 @@ class MoviesProvider extends ChangeNotifier {
 
   List<Movie> nowPlayingMovies = [];
   List<Movie> popularMovies = [];
+  int _popularPage = 0;
 
   MoviesProvider() {
     getNowPlayingMovies();
@@ -16,22 +17,25 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   getNowPlayingMovies() async {
-    var url = Uri.http(_baseUrl, '/3/movie/now_playing',
-        {'api_key': _apiKey, 'language': _language, 'page': '1'});
-
-    final response = await http.get(url);
-    final parsedResponse = NowPlayingResponse.fromJson(response.body);
+    final jsonResponse = await _sendGetRequest('/3/movie/now_playing');
+    final parsedResponse = NowPlayingResponse.fromJson(jsonResponse);
     nowPlayingMovies = parsedResponse.results;
     notifyListeners();
   }
 
   getPopularMovies() async {
-    var url = Uri.http(_baseUrl, '/3/movie/popular',
-        {'api_key': _apiKey, 'language': _language, 'page': '1'});
-
-    final response = await http.get(url);
-    final popularResponse = PopularResponse.fromJson(response.body);
+    _popularPage++;
+    final jsonResponse = await _sendGetRequest('/3/movie/popular');
+    final popularResponse = PopularResponse.fromJson(jsonResponse);
     popularMovies = [...popularMovies, ...popularResponse.results];
     notifyListeners();
+  }
+
+  Future<String> _sendGetRequest(String endpoint, [int page = 1]) async {
+    var url = Uri.http(_baseUrl, endpoint,
+        {'api_key': _apiKey, 'language': _language, 'page': page});
+
+    final response = await http.get(url);
+    return response.body;
   }
 }

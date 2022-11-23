@@ -6,8 +6,9 @@ import '../models/models.dart';
 
 class MovieSlider extends StatelessWidget {
   final List<Movie> movies;
-
-  const MovieSlider({required this.movies, Key? key}) : super(key: key);
+  final String title;
+  const MovieSlider({required this.movies, required this.title, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +30,15 @@ class MovieSlider extends StatelessWidget {
       width: double.infinity,
       height: 250,
       child: Column(children: [
-        const Padding(
+        Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              'Populares',
+              title,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
             )),
         SizedBox(height: 5),
         Expanded(
-          // toma todo el tamaño disponible
+          //Expanded toma todo el tamaño disponible
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: movies.length,
@@ -77,7 +78,7 @@ class _MoviePoster extends StatelessWidget {
           height: 5,
         ),
         Text(
-          'Starwars: El retorno del Jedi fogoso que siempre sale de casa',
+          movie.title,
           maxLines: 2,
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
