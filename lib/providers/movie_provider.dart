@@ -33,7 +33,7 @@ class MoviesProvider extends ChangeNotifier {
 
   Future<String> _sendGetRequest(String endpoint, [int page = 1]) async {
     var url = Uri.http(_baseUrl, endpoint,
-        {'api_key': _apiKey, 'language': _language, 'page': page});
+        {'api_key': _apiKey, 'language': _language, 'page': '$page'});
 
     final response = await http.get(url);
     return response.body;
