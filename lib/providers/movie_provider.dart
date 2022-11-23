@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class MoviesProvider extends ChangeNotifier {
   final String _baseUrl = 'api.themoviedb.org';
   final String _apiKey = 'a3478cc0730a55fb49c7b630b7164c4b';
-  final String _language = 'es_ES';
+  final String _language = 'es-ES';
 
   List<Movie> nowPlayingMovies = [];
   List<Movie> popularMovies = [];
@@ -25,7 +25,8 @@ class MoviesProvider extends ChangeNotifier {
 
   getPopularMovies() async {
     _popularPage++;
-    final jsonResponse = await _sendGetRequest('/3/movie/popular');
+    final jsonResponse =
+        await _sendGetRequest('/3/movie/popular', _popularPage);
     final popularResponse = PopularResponse.fromJson(jsonResponse);
     popularMovies = [...popularMovies, ...popularResponse.results];
     notifyListeners();
