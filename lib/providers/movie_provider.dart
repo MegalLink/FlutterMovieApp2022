@@ -40,7 +40,17 @@ class MoviesProvider extends ChangeNotifier {
     final jsonResponse = await _sendGetRequest('/3/movie/$movieId/credits');
     final creditsResponse = CreditsResponse.fromJson(jsonResponse);
     movieCast[movieId] = creditsResponse.cast;
+
     return creditsResponse.cast;
+  }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    var url = Uri.http(_baseUrl, '/3/search/movie',
+        {'api_key': _apiKey, 'language': _language, 'query': query});
+    final response = await http.get(url);
+    final searchResponse = SearchResponse.fromJson(response.body);
+
+    return searchResponse.results;
   }
 
   Future<String> _sendGetRequest(String endpoint, [int page = 1]) async {
@@ -48,6 +58,7 @@ class MoviesProvider extends ChangeNotifier {
         {'api_key': _apiKey, 'language': _language, 'page': '$page'});
 
     final response = await http.get(url);
+
     return response.body;
   }
 }
