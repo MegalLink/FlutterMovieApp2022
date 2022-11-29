@@ -32,6 +32,7 @@ class Movie {
   String? backdropPath;
   String? posterPath;
   String? releaseDate;
+  String? generatedHeroId;
 
   String getFullPosterImage() {
     if (posterPath != null) {
